@@ -22,6 +22,7 @@ public class Individual {
     public char getGene (int index, int index2) {
         return genes[index][index2];
     }
+    public void setGene (int index, int index2, char insert) { genes[index][index2] = insert; }
 
     /* public methods */
     public int size() {
