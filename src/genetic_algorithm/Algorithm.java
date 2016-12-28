@@ -7,8 +7,12 @@ import java.util.Random;
  */
 public class Algorithm {
 
+    // Declaring Variables
+    private static final double mutationRate = 0.001;
+
     Random generator = new Random();
 
+    // Crossover individuals
     void crossover(Individual indiv1, Individual indiv2, int chromosomeSize) {
 
         int column = generator.nextInt(chromosomeSize);
@@ -50,4 +54,20 @@ public class Algorithm {
 
     }
 
+    //Mutation
+    private static void mutate(Population pop ,Individual indiv) { // Giving population as a parameter is reasonable ?
+
+        // Loop through genes
+        for (int i = 0; i < indiv.chromosomeSize; i++) {
+            for (int j = 0; j < indiv.chromosomeSize; j++) {
+                if (Math.random() <= mutationRate) { // Need to be checked for proper values
+                    // Create random gene
+                    char temp = pop.possibleStates[indiv.randomWithRange(0, pop.possibleStates.length - 1)]; // Need to be tested !
+                    //Save random gene
+                    indiv.setGene(i, j, temp);
+                }
+            }
+
+        }
+    }
 }
