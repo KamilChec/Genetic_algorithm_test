@@ -10,5 +10,6 @@ public class Main
     {
         System.out.println("Genetic Algorithm");
         Population myPop = new Population(50,true);
+        myPop.individuals[0].drawIndividual();
     }
 }

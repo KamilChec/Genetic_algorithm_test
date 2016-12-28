@@ -28,10 +28,21 @@ public class Individual {
     public int size() {
         return chromosomeSize;
     }
+
     static int randomWithRange(int min, int max)
     {
         int range = (max - min) + 1;
         return (int)(Math.random() * range) + min;
+    }
+
+    public void drawIndividual() {
+        for (int i = 0; i < size(); i++) {
+            String temp = "";
+            for (int j = 0; j < size(); j++) {
+            temp += getGene(i,j);
+            }
+            System.out.println(temp);
+        }
     }
 
 
