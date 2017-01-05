@@ -6,18 +6,17 @@ package genetic_algorithm;
 public class Population {
 
     Individual[] individuals;
-    char[] possibleStates = {'#','$','*','_','^'};
 
     /*Constructor*/
     //Create population
-    public Population(int populationSize, boolean initialize){
+    public Population(int populationSize, boolean initialize, Gene[] template){
         individuals = new Individual[populationSize];
         // Initializing population
         if (initialize){
             //Creating individuals loop
             for (int i = 0 ; i < size(); i++){
                 Individual newIndividual = new Individual();
-                newIndividual.generateIndividual(possibleStates);
+                newIndividual.generateIndividual(template);
                 saveIndividual(i, newIndividual);
             }
         }

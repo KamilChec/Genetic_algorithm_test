@@ -5,24 +5,13 @@ package genetic_algorithm;
  */
 public class Gene {
 
-    //Location variables
-    int first_x_coordinate;
-    int second_x_coordinate;
-    int first_y_coordinate;
-    int second_y_coordinate;
-    //Rest of the variables
-    int size;
-    boolean occurance;
-
+    Building buildingType;
+    int fieldNumber;
 
     //Constructor
-    public Gene(int f_x_coordinate, int s_x_coordinate, int f_y_coordinate, int s_y_coordinate, int s ,boolean occur){
-        first_x_coordinate = f_x_coordinate;
-        second_x_coordinate = s_x_coordinate;
-        first_y_coordinate = f_y_coordinate;
-        second_y_coordinate = s_y_coordinate;
-        size = s;
-        occurance = occur;
+    public Gene(Building type, int number){
+        buildingType = type;
+        fieldNumber = number;
     }
 
 }
