@@ -4,7 +4,6 @@ package genetic_algorithm;
  */
 public class Individual {
 
-    int chromosomeSize = 8;
     //Each place in the array is the building - In other worlds each gene is the building
     private Gene[][] genes;
     //Creating a random individual
@@ -29,9 +28,15 @@ public class Individual {
     public Gene getGene (int index, int index2) {
         return genes[index][index2];
     }
-    public void setGene (int index, int index2, Building insert, int number, Gene[][] Genes){
-        Genes[index][index2].buildingType = insert;
-        Genes[index][index2].fieldNumber = number;
+    public int getGeneRowLength (int index){
+        return genes[index].length;
+    }
+    public void setGene (int index, int index2, Building insert, int number){
+        genes[index][index2].buildingType = insert;
+        genes[index][index2].fieldNumber = number;
+    }
+    public void setGeneNull (int index, int index2){
+        genes[index][index2] = null;
     }
     public char getGeneSign(Building type){
         char sign;
@@ -66,7 +71,7 @@ public class Individual {
 
     /* public methods */
     public int size() {
-        return chromosomeSize;
+        return (int) Math.sqrt(genes[0].length);
     }
 
     static int randomWithRange(int min, int max)
@@ -75,11 +80,11 @@ public class Individual {
         return (int)(Math.random() * range) + min;
     }
 
-    public void drawIndividual() {
-        for (int i = 0; i < size(); i++) {
+    public void drawIndividual(int size) { // Need to change this
+        for (int i = 0; i < size; i++) {
             String temp = "";
             Gene tempGene; // Initializing creates a problem
-            for (int j = 0; j < size(); j++) {
+            for (int j = 0; j < size; j++) {
             tempGene = getGene(i,j);
             temp += getGeneSign(tempGene.buildingType);
             }
