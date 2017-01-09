@@ -26,7 +26,7 @@ public class Main
         }
         return genes;
     }
-    private static void crossover(Individual indiv1, Individual indiv2) {
+    private static void crossover(Individual indiv1, Individual indiv2) { // Sometimes error line 54
 
         // Individuals sizes
         int size1 = (int) Math.sqrt(indiv1.getGeneRowLength(0));
