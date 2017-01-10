@@ -79,6 +79,68 @@ public class Main
             }
         }
     }
+
+    static double calcFitness(double dist, double p) {
+
+        double fit = -dist*dist + 2*p*dist;
+
+        return fit;
+    }
+
+    static double getFitness(int templateSize, Individual indiv, double hsDistance, double htDistance, double hpDistance) {
+
+        int size = (int) Math.sqrt(templateSize);
+
+        double distance;
+        double fitness = 0;
+        double maxDistance = Math.sqrt((size-1)*(size-1)+(size-1)*(size-1));
+
+        double pHS = hsDistance*maxDistance;
+        double pHT = htDistance*maxDistance;
+        double pHP = hpDistance*maxDistance;
+
+        Building build1;
+        Building build2;
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                build1 = indiv.getGene(i, j).buildingType;
+                if (build1==Building.HOUSE) {
+                    for (int z = 0; z < size; z++) {
+                        for (int v = 0; v < size; v++) {
+                            build2 = indiv.getGene(z, v).buildingType;
+                            switch (build2) {
+
+                                case HOUSE:
+                                    break;
+                                case STORE:
+                                    distance = Math.sqrt((i-z)*(i-z)+(j-v)*(j-v));
+                                    fitness+=calcFitness(distance,pHS);
+                                    break;
+                                case TRASHCAN:
+                                    distance = Math.sqrt((i-z)*(i-z)+(j-v)*(j-v));
+                                    fitness+=calcFitness(distance,pHT);
+                                    break;
+                                case EMPTY:
+                                    break;
+                                case PLAYGROUND:
+                                    distance = Math.sqrt((i-z)*(i-z)+(j-v)*(j-v));
+                                    fitness+=calcFitness(distance,pHP);
+                                    break;
+                                case TEMP:
+                                    break;
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        return fitness;
+    }
     static int randomWithRange(int min, int max)
     {
         int range = (max - min) + 1;
@@ -99,5 +161,12 @@ public class Main
         System.out.println("\n");
         myPop.individuals[1].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
         System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
+        System.out.println(getFitness(64,myPop.individuals[0],0.4,0.5,0.1));
+        crossover(myPop.individuals[0],myPop.individuals[1]);
+        System.out.println(getFitness(64,myPop.individuals[0],0.4,0.5,0.1));
+        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
     }
 }
