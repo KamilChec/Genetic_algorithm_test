@@ -6,6 +6,8 @@ public class Individual {
 
     //Each place in the array is the building - In other worlds each gene is the building
     private Gene[][] genes;
+    //Cache
+    private double fitness = 0;
     //Creating a random individual
     public Individual(Gene[] template) {
 
@@ -87,8 +89,16 @@ public class Individual {
     }
 
     /* public methods */
-    public int size() {
-        return (int) Math.sqrt(genes[0].length);
+//    public int size() {
+//        return genes[0].length;
+//    }
+
+    public double getFitness() {
+        if( fitness == 0 ){
+            fitness = Algorithm.getFitness(this);
+        }
+        return fitness;
+
     }
 
     static int randomWithRange(int min, int max)
