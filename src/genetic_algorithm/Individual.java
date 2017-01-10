@@ -7,7 +7,7 @@ public class Individual {
     //Each place in the array is the building - In other worlds each gene is the building
     private Gene[][] genes;
     //Creating a random individual
-    public void generateIndividual(Gene[] template) {
+    public Individual(Gene[] template) {
 
         int size = (int) Math.sqrt(template.length);
         genes = new Gene[size][size];
@@ -23,6 +23,18 @@ public class Individual {
         }
     }
 
+    //Copying constructor
+    public Individual(Individual indiv) {
+
+        int size = (indiv.getGeneRowLength(0));
+        genes = new Gene[size][size];
+        // Loop through the template []
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size;j++){
+                genes[i][j] = new Gene(indiv.getGene(i,j).buildingType, indiv.getGene(i,j).fieldNumber);
+            }
+        }
+    }
 
     /* Getters and setters */
     public Gene getGene (int index, int index2) {
@@ -36,7 +48,8 @@ public class Individual {
         genes[index][index2].fieldNumber = number;
     }
     public void setGeneNull (int index, int index2){
-        genes[index][index2] = null;
+        genes[index][index2].buildingType = Building.TEMP;
+        genes[index][index2].fieldNumber = -1;
     }
     public char getGeneSign(Building type){
         char sign;
@@ -59,6 +72,10 @@ public class Individual {
 
             case EMPTY:
                 sign = '_';
+                break;
+
+            case TEMP:
+                sign = 'T';
                 break;
 
             default:

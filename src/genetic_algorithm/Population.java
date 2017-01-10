@@ -15,8 +15,7 @@ public class Population {
         if (initialize){
             //Creating individuals loop
             for (int i = 0 ; i < size(); i++){
-                Individual newIndividual = new Individual();
-                newIndividual.generateIndividual(template);
+                Individual newIndividual = new Individual(template);
                 saveIndividual(i, newIndividual);
             }
         }
