@@ -29,28 +29,29 @@ public class Main
     private static void crossover(Individual indiv1, Individual indiv2) { // Sometimes error line 54
 
         // Individuals sizes
-        int size1 = (int) Math.sqrt(indiv1.getGeneRowLength(0));
-        int size2 = (int) Math.sqrt(indiv2.getGeneRowLength(0));
+        int size1 = (indiv1.getGeneRowLength(0));
+        int size2 = (indiv2.getGeneRowLength(0));
 
         if ( size1 == size2 ) {
-            int column = randomWithRange(0,size1);
-            int row = randomWithRange(0,size1);
+            int column = randomWithRange(1,size1);
+            int row = randomWithRange(1,size1);
+
             //int part = generator.nextInt(4); // Don't need to use now
 
             //Creating temporary individual
-            Individual temporary1 = indiv1;
-            Individual temporary2 = indiv2;
+            Individual temporary1 = new Individual(indiv1);
+            Individual temporary2 = new Individual(indiv2);
 
-            //Clear crossover area
-            for (int i = 0; i < column; i++) {
-                for (int j=0; j < row; j++) {
+            //Clear crossover area - Not good !
+            for (int i = 0; i < row; i++) {
+                for (int j=0; j < column; j++) {
                     indiv1.setGeneNull(i, j);
                     indiv2.setGeneNull(i, j);
                 }
             }
 
-            for (int i = 0; i < column; i++) {
-                for (int j = 0; j < row; j++) {
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < column; j++) {
                     indiv1.setGene(i, j, temporary2.getGene(i,j).buildingType, temporary2.getGene(i,j).fieldNumber);
                     indiv2.setGene(i, j, temporary1.getGene(i,j).buildingType, temporary1.getGene(i,j).fieldNumber);
                     // Loop for first individual
