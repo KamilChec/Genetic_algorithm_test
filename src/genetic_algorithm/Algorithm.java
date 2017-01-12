@@ -1,5 +1,7 @@
 package genetic_algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -36,7 +38,7 @@ public class Algorithm {
         for (int i = elitismOffset; i < pop.size(); i++) {
             Individual indiv1 = tournamentSelection(pop,template);
             Individual indiv2 = tournamentSelection(pop,template);
-            Individual newIndiv = crossover(indiv1, indiv2);
+            Individual newIndiv = cxCrossover(indiv1, indiv2);
             newPopulation.saveIndividual(i, newIndiv);
         }
 
@@ -110,9 +112,78 @@ public class Algorithm {
 
         return newSol;
     }
+    private static Individual cxCrossover(Individual indiv1, Individual indiv2){
+
+        // Individuals sizes
+        int size1 = (indiv1.getGeneRowLength(0));
+        int size2 = (indiv2.getGeneRowLength(0));
+        //
+        Individual newSol = indiv1;
+        if ( size1 == size2 ) {
+
+            //Transform 2D arrays for 1D arrays
+            Gene[] parent1 = new Gene[size1*size1];
+            Gene[] parent2 = new Gene[size1*size1];
+            //Child
+            Gene[] buffer = new Gene[size1*size1];
+            List<Gene> list1 = new ArrayList<>(); // <Gene> ?
+            List<Gene> list2 = new ArrayList<>();
+            for (int i = 0; i < size1; i++) {
+                for (int j = 0; j < size1; j++) {
+                    list1.add(indiv1.getGene(i,j));
+                    list2.add(indiv2.getGene(i,j));
+                }
+            }
+            for (int i = 0; i < parent1.length; i++) {
+                parent1[i] = list1.get(i);
+                parent2[i] = list2.get(i);
+                //Filling child with temp values
+                buffer[i] = new Gene(Building.TEMP,-1);
+
+            }
+
+            // Already have transformed arrays
+            buffer[0] = new Gene(parent1[0]); //Przypisanie 1
+            int temp = parent2[0].fieldNumber;
+            for(int i = 1 ; i < parent1.length; i++){ //Buffer length
+                int j = 0;
+                while(parent1[j].fieldNumber != temp){
+                    //buffer[j] = indiv1[j];
+                    j++;
+                }
+                buffer[j] = new Gene(parent1[j]);
+                temp = parent2[j].fieldNumber;
+            }
+
+            for( int i = 0 ; i < buffer.length; i++){
+                if(buffer[i].fieldNumber == -1){
+                    buffer[i] = new Gene(parent2[i]);
+                }
+            }
+
+            //Create 2D Individual from 1D Genes array
+            List<Gene> templist = new ArrayList<>();
+            for (int i = 0 ; i < buffer.length; i++){
+                templist.add(buffer[i]);
+            }
+
+            Gene[][] newSolGenes = new Gene[size1][size1];
+            int z = 0;
+            for(int i = 0; i < size1; i++){
+                for(int j = 0; j< size1;j++){
+                    newSolGenes[i][j] = new Gene(templist.get(z));
+                    z++;
+                }
+            }
+            newSol = new Individual(newSolGenes);
+
+        }
+
+        return newSol;
+    }
 
     //Mutation
-    private static void mutate(Individual indiv) { // Giving population as a parameter is reasonable ?
+    private static void mutate(Individual indiv) { // Mutation ok !
 
         int size = (indiv.getGeneRowLength(0));
         // Loop through genes
@@ -126,7 +197,7 @@ public class Algorithm {
                         index1 = randomWithRange(0, (size-1));
                         index2 = randomWithRange(0, (size-1));
                     }
-                    Gene temp = indiv.getGene(index1,index2);
+                    Gene temp = new Gene(indiv.getGene(index1,index2)); //Creating new temporary Gene
                     //Save genes
                     indiv.setGene(index1, index2, indiv.getGene(i,j).buildingType, indiv.getGene(i,j).fieldNumber);
                     indiv.setGene(i, j, temp.buildingType,temp.fieldNumber);

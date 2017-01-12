@@ -38,6 +38,10 @@ public class Individual {
         }
     }
 
+    public Individual(Gene[][] g){
+        genes = g;
+    }
+
     /* Getters and setters */
     public Gene getGene (int index, int index2) {
         return genes[index][index2];
@@ -112,11 +116,13 @@ public class Individual {
             String temp = "";
             Gene tempGene; // Initializing creates a problem
             for (int j = 0; j < size; j++) {
-            tempGene = getGene(i,j);
-            temp += getGeneSign(tempGene.buildingType);
-            }
-            System.out.println(temp);
-        }
+        tempGene = getGene(i,j);
+        //temp += getGeneSign(tempGene.buildingType);
+        temp += getGeneSign(tempGene.buildingType);
     }
+            System.out.println(temp);
+}
+        System.out.println("\n");
+                }
 
 }

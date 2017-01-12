@@ -1,5 +1,8 @@
 package genetic_algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by User on 19.12.2016.
  */
@@ -32,11 +35,12 @@ public class Main
 
         System.out.println("Genetic Algorithm");
 
-        Gene[] template = createTemplate(64,4,4,4,5);
+        //Gene[] template = createTemplate(128,8,10,8,8);
+        Gene[] template = createTemplate(81,8,4,7,5);
         Population myPop = new Population(50,true, template);
 
         int generationCount = 0;
-        while(myPop.getFittest().getFitness() < 4000){ //Proper condition of ending algorithm
+        while(myPop.getFittest().getFitness() < 2368){ //Proper condition of ending algorithm
             generationCount++;
             System.out.println("Generation: "+ generationCount +" Fittest: "+ myPop.getFittest().getFitness());
             myPop = Algorithm.evolvePopulation(myPop,template);
@@ -46,22 +50,5 @@ public class Main
         System.out.println("Genes:");
         myPop.getFittest().drawIndividual(myPop.getFittest().getGeneRowLength(0));
 
-//
-//        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
-//        System.out.println("\n");
-//        myPop.individuals[1].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
-//        System.out.println("\n");
-//        crossover(myPop.individuals[0],myPop.individuals[1]);
-//        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
-//        System.out.println("\n");
-//        myPop.individuals[1].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
-//        System.out.println("\n");
-//        System.out.println("\n");
-//        System.out.println("\n");
-//        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
-//        System.out.println(getFitness(64,myPop.individuals[0],0.4,0.5,0.1));
-//        crossover(myPop.individuals[0],myPop.individuals[1]);
-//        System.out.println(getFitness(64,myPop.individuals[0],0.4,0.5,0.1));
-//        myPop.individuals[0].drawIndividual(myPop.individuals[0].getGeneRowLength(0));
     }
 }

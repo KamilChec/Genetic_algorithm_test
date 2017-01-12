@@ -13,5 +13,10 @@ public class Gene {
         buildingType = type;
         fieldNumber = number;
     }
+    //Copying Constructor
+    public Gene(Gene gene){
+        buildingType = gene.buildingType;
+        fieldNumber = gene.fieldNumber;
+    }
 
 }
