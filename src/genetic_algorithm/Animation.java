@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
  */
 public class Animation extends JPanel {
 
+    BufferedImage img;
+    Graphics2D cg;
     private BufferedImage house;
     private BufferedImage store;
     private BufferedImage trash;
@@ -23,7 +25,7 @@ public class Animation extends JPanel {
     private Individual currentBest;
     private Population pop;
     private int size;
-    int k=1;
+    int k=0;
     int dist;
     int scale;
     Toolkit toolkit;
@@ -109,6 +111,34 @@ public class Animation extends JPanel {
                     case TEMP:
                         break;
                 }
+            }
+        }
+        if(k==1) {
+            img = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            cg = img.createGraphics();
+            this.paintAll(cg);
+            try {
+                if (ImageIO.write(img, "png", new File("before.png")))
+                {
+                    System.out.println("-- saved");
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        if (k==currentPop.size()-1) {
+            img = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            cg = img.createGraphics();
+            this.paintAll(cg);
+            try {
+                if (ImageIO.write(img, "png", new File("after.png")))
+                {
+                    System.out.println("-- saved");
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
     }
