@@ -44,7 +44,7 @@ public class Main
         bestFit.add(myPop);
 
         int generationCount = 0;
-        while(myPop.getFittest().getFitness() < 2368){ //Proper condition of ending algorithm
+        while(myPop.getFittest().getFitness() < 1900){ //Proper condition of ending algorithm
             generationCount++;
             System.out.println("Generation: "+ generationCount +" Fittest: "+ myPop.getFittest().getFitness());
             myPop = Algorithm.evolvePopulation(myPop,template);
@@ -75,7 +75,7 @@ public class Main
         f.setSize(640, 640);
         f.setMinimumSize(new Dimension(200, 200));
         f.setLocation(300, 0);
-        f.setBackground(Color.black);
+        f.setBackground(Color.white);
         f.setLayout(new BorderLayout());
         f.add(a, BorderLayout.CENTER);
         f.setVisible(true);
