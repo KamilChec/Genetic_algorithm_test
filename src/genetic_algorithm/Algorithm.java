@@ -243,12 +243,10 @@ public class Algorithm {
         double fitness = 0;
         double maxDistance = Math.sqrt((size-1)*(size-1)+(size-1)*(size-1));
 
-//        double pHS = hsDistance*maxDistance;
-//        double pHT = htDistance*maxDistance;
-//        double pHP = hpDistance*maxDistance;
         double pHS = 0.4*maxDistance;
-        double pHT = 0.5*maxDistance;
+        double pHT = 0.3*maxDistance;
         double pHP = 0.1*maxDistance;
+        double pPT = 0.4*maxDistance;
 
         Building build1;
         Building build2;
@@ -285,6 +283,35 @@ public class Algorithm {
                         }
 
                     }
+                }
+
+                else if (build1==Building.PLAYGROUND) {
+
+                    for (int z = 0; z < size; z++) {
+                        for (int v = 0; v < size; v++) {
+                            build2 = indiv.getGene(z, v).buildingType;
+                            switch (build2) {
+
+                                case HOUSE:
+                                    break;
+                                case STORE:
+                                    break;
+                                case TRASHCAN:
+                                    distance = Math.sqrt((i-z)*(i-z)+(j-v)*(j-v));
+                                    fitness+=calcFitness(distance,pPT);
+                                    break;
+                                case EMPTY:
+                                    break;
+                                case PLAYGROUND:
+                                    break;
+                                case TEMP:
+                                    break;
+                            }
+
+                        }
+
+                    }
+
                 }
 
             }
