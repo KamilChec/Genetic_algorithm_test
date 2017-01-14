@@ -1,5 +1,7 @@
 package genetic_algorithm;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +40,44 @@ public class Main
         //Gene[] template = createTemplate(128,8,10,8,8);
         Gene[] template = createTemplate(81,8,4,7,5);
         Population myPop = new Population(50,true, template);
+        List<Population> bestFit = new ArrayList<>();
+        bestFit.add(myPop);
 
         int generationCount = 0;
         while(myPop.getFittest().getFitness() < 2368){ //Proper condition of ending algorithm
             generationCount++;
             System.out.println("Generation: "+ generationCount +" Fittest: "+ myPop.getFittest().getFitness());
             myPop = Algorithm.evolvePopulation(myPop,template);
+            bestFit.add(myPop);
         }
+        showAnimation(bestFit);
+
         System.out.println("Solution found!");
         System.out.println("Generation: "+ generationCount);
         System.out.println("Genes:");
         myPop.getFittest().drawIndividual(myPop.getFittest().getGeneRowLength(0));
 
+    }
+    private static void showAnimation(List<Population> population){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Animation animation = new Animation(population);
+                newJFrame(animation);
+                animation.runAnimation(true);
+            }
+        });
+    }
+
+    private static void newJFrame(JPanel a){
+        JFrame f = new JFrame("Area");
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.setLayout(new GridLayout(1, 1));
+        f.setSize(640, 640);
+        f.setMinimumSize(new Dimension(200, 200));
+        f.setLocation(300, 0);
+        f.setBackground(Color.black);
+        f.setLayout(new BorderLayout());
+        f.add(a, BorderLayout.CENTER);
+        f.setVisible(true);
     }
 }
