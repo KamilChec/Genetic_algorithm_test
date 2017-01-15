@@ -1,5 +1,9 @@
 package genetic_algorithm;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,23 +36,50 @@ public class Main
         return genes;
     }
 
+    static void saveToFile(int generation, double fitness) throws IOException {
+
+        FileWriter file = new FileWriter("ga_data_size81_params2.txt", true);
+        BufferedWriter out = new BufferedWriter(file);
+        String toWrite =  generation + "\t" + fitness + "\n";
+        out.write(toWrite);
+        out.close();
+
+    }
+
+
     public static void main(String[] args)
     {
 
         System.out.println("Genetic Algorithm");
 
         //Gene[] template = createTemplate(128,8,10,8,8);
-        Gene[] template = createTemplate(81,8,4,7,5);
+        Gene[] template = createTemplate(81,12,6,6,6);
         Population myPop = new Population(50,true, template);
         List<Population> bestFit = new ArrayList<>();
         bestFit.add(myPop);
 
+        int counter = 0;
+        double tempFittest = 0;
         int generationCount = 0;
-        while(myPop.getFittest().getFitness() < 1900){ //Proper condition of ending algorithm
+
+
+        while(counter <= 200){ //Proper condition of ending algorithm
             generationCount++;
             System.out.println("Generation: "+ generationCount +" Fittest: "+ myPop.getFittest().getFitness());
+            tempFittest = myPop.getFittest().getFitness();
             myPop = Algorithm.evolvePopulation(myPop,template);
             bestFit.add(myPop);
+            if(tempFittest == myPop.getFittest().getFitness()){
+                counter++;
+            }
+            else{
+                counter = 0;
+            }
+            try {
+                saveToFile(generationCount, myPop.getFittest().getFitness());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         showAnimation(bestFit);
 
@@ -72,7 +103,7 @@ public class Main
         JFrame f = new JFrame("Area");
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setLayout(new GridLayout(1, 1));
-        f.setSize(640, 640);
+        f.setSize(700, 700);
         f.setMinimumSize(new Dimension(200, 200));
         f.setLocation(300, 0);
         f.setBackground(Color.white);
